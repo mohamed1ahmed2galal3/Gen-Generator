@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gen Creators — حيث يتحول التعلم إلى نجاح حقيقي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c14;
+    --surface: #0d1420;
+    --card: #111827;
+    --accent1: #00d4ff;
+    --accent2: #7c3aed;
+    --accent3: #f59e0b;
+    --text: #f0f4ff;
+    --muted: #7c8ba1;
+    --border: rgba(0,212,255,0.15);
+    --glow: 0 0 40px rgba(0,212,255,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cairo', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: .5;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent1); border-radius: 2px; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 40px;
+    background: rgba(8,12,20,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    animation: slideDown 0.8s ease;
+  }
+
+  @keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .nav-links { display: flex; gap: 30px; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: color 0.3s;
+    letter-spacing: 1px;
+  }
+  .nav-links a:hover { color: var(--accent1); }
+
+  /* ─── SECTIONS BASE ─── */
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,58,237,0.25) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0,212,255,0.15) 0%, transparent 60%),
+                var(--bg);
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent1);
+    border: 1px solid var(--border);
+    padding: 6px 18px;
+    border-radius: 50px;
+    margin-bottom: 30px;
+    animation: fadeUp 1s ease 0.2s both;
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(56px, 10vw, 120px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    animation: fadeUp 1s ease 0.4s both;
+  }
+
+  .hero-title .glow-word {
+    background: linear-gradient(135deg, var(--accent1) 0%, var(--accent2) 60%, var(--accent3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(0,212,255,0.5));
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--muted);
+    margin-top: 24px;
+    font-weight: 400;
+    animation: fadeUp 1s ease 0.6s both;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    gap: 16px;
+    margin-top: 50px;
+    animation: fadeUp 1s ease 0.8s both;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    color: #fff;
+    padding: 14px 36px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 8px 32px rgba(0,212,255,0.3);
+    text-decoration: none;
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px rgba(0,212,255,0.5);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    max-width: 700px;
+    margin: 70px auto 0;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    animation: fadeUp 1s ease 1s both;
+  }
+
+  .hero-stat {
+    background: var(--surface);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .hero-stat .num {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--accent1);
+    display: block;
+  }
+
+  .hero-stat .lbl {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ─── FLOATING ORBS ─── */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: drift 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .orb-1 { width: 400px; height: 400px; background: rgba(124,58,237,0.2); top: -100px; right: -100px; animation-delay: 0s; }
+  .orb-2 { width: 300px; height: 300px; background: rgba(0,212,255,0.15); bottom: -80px; left: -80px; animation-delay: 3s; }
+  .orb-3 { width: 200px; height: 200px; background: rgba(245,158,11,0.1); top: 40%; left: 20%; animation-delay: 1.5s; }
+
+  @keyframes drift {
+    0%,100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(30px, -20px) scale(1.05); }
+    66% { transform: translate(-20px, 30px) scale(0.95); }
+  }
+
+  /* ─── SECTION LABEL ─── */
+  .sec-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent1);
+    margin-bottom: 14px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+  }
+
+  .sec-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 5vw, 54px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .sec-desc {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 600px;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── ABOUT / COMPANY ─── */
+  #company {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .company-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .info-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .info-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: border-color 0.3s, transform 0.3s;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+  }
+  .info-card:hover {
+    border-color: var(--accent1);
+    transform: translateX(-6px);
+    box-shadow: var(--glow);
+  }
+
+  .info-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .info-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent1);
+    margin-bottom: 4px;
+  }
+
+  .info-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ─── GAMIFIED SECTION ─── */
+  #gamified {
+    background: var(--bg);
+  }
+
+  .game-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .game-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 50px;
+  }
+
+  .game-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s, border-color 0.4s;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+  }
+
+  .game-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+    transform: scaleX(0);
+    transition: transform 0.4s;
+    transform-origin: right;
+  }
+
+  .game-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(0,212,255,0.4);
+  }
+  .game-card:hover::before { transform: scaleX(1); transform-origin: left; }
+
+  .game-card-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .game-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .game-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .challenge-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .tag {
+    background: rgba(0,212,255,0.1);
+    border: 1px solid rgba(0,212,255,0.2);
+    color: var(--accent1);
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-weight: 600;
+  }
+
+  /* ─── JOBS ─── */
+  #jobs {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+
+  .jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 1100px;
+    margin: 50px auto 0;
+  }
+
+  .job-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+    transition: border-color 0.3s;
+  }
+  .job-card:hover { border-color: var(--accent2); }
+
+  .job-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent2), var(--accent1));
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+  }
+
+  .job-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .job-target {
+    font-size: 13px;
+    color: var(--accent3);
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .job-skills {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .skill-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .skill-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent1);
+    flex-shrink: 0;
+  }
+
+  .skill-row span {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  /* ─── RECRUITMENT ─── */
+  #recruitment { background: var(--bg); }
+
+  .recruitment-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .recruit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-top: 50px;
+  }
+
+  .recruit-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 30px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+  }
+
+  .recruit-block h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent1);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .recruit-block ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .recruit-block li {
+    font-size: 14px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .recruit-block li::before {
+    content: '→';
+    color: var(--accent1);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .steps-flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-top: 50px;
+    position: relative;
+  }
+
+  .step-item {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  .step-item::after {
+    content: '';
+    position: absolute;
+    top: 30px;
+    right: 0;
+    width: 50%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent1), transparent);
+  }
+  .step-item:last-child::after { display: none; }
+  .step-item::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width: 50%;
+    height: 2px;
+    background: linear-gradient(270deg, var(--accent1), transparent);
+  }
+  .step-item:first-child::before { display: none; }
+
+  .step-circle {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
+    margin: 0 auto 16px;
+    box-shadow: 0 0 24px rgba(0,212,255,0.4);
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 24px rgba(0,212,255,0.4); }
+    50% { box-shadow: 0 0 48px rgba(0,212,255,0.7); }
+  }
+
+  .step-item h5 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .step-item p { font-size: 13px; color: var(--muted); }
+
+  /* ─── BRAND ─── */
+  #brand {
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(124,58,237,0.1) 100%);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .brand-quote {
+    font-size: clamp(22px, 4vw, 38px);
+    font-weight: 700;
+    line-height: 1.4;
+    background: linear-gradient(135deg, var(--text), var(--accent1));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 40px 0 60px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .brand-values {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+  }
+
+  .brand-val {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 20px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .brand-val:hover {
+    border-color: var(--accent1);
+    transform: translateY(-6px);
+  }
+
+  .brand-val .val-icon { font-size: 32px; margin-bottom: 12px; display: block; }
+  .brand-val p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* ─── COMPENSATION ─── */
+  #compensation { background: var(--bg); }
+
+  .comp-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .comp-warning {
+    background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 12px;
+    padding: 16px 24px;
+    font-size: 14px;
+    color: var(--accent3);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.2s forwards;
+  }
+
+  .comp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .comp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+    transition: border-color 0.3s;
+  }
+  .comp-card:hover { border-color: var(--accent1); }
+
+  .comp-card .comp-icon { font-size: 28px; margin-bottom: 12px; display: block; }
+  .comp-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  /* ─── KPIs ─── */
+  #kpis {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+
+  .kpi-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 50px;
+  }
+
+  .kpi-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 24px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+  .kpi-card:hover { transform: scale(1.04); }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+  }
+
+  /* ─── VIDEO SECTION ─── */
+#video {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.video-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.video-card {
+  margin-top: 50px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+/* نفس خط الـ glow اللي عندك */
+.video-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s;
+}
+
+.video-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent1);
+}
+
+.video-card:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.video-wrapper {
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.video-wrapper video {
+  width: 100%;
+  display: block;
+  border-radius: 14px;
+}
+
+/* glow خفيف حوالين الفيديو */
+.video-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: 0 0 40px rgba(0,212,255,0.15);
+  pointer-events: none;
+}
+
+  .kpi-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .kpi-label {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .kpi-extra {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 32px;
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.4s forwards;
+  }
+
+  .kpi-extra .big-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--accent3);
+    flex-shrink: 0;
+  }
+
+  .kpi-extra p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ─── TEAM ─── */
+  #team {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+
+  .team-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 50px;
+  }
+
+  .team-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .team-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,212,255,0.2), transparent);
+    filter: blur(20px);
+  }
+
+  .team-card:hover {
+    border-color: var(--accent1);
+    transform: translateY(-8px);
+  }
+
+  .team-avatar {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    margin: 0 auto 16px;
+    box-shadow: 0 8px 24px rgba(0,212,255,0.3);
+  }
+
+  .team-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .team-card .team-id { font-size: 12px; color: var(--muted); }
+  .team-card .team-section {
+    font-size: 11px;
+    background: rgba(124,58,237,0.2);
+    border: 1px solid rgba(124,58,237,0.3);
+    color: var(--accent2);
+    padding: 2px 10px;
+    border-radius: 50px;
+    display: inline-block;
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  /* ─── CTA / CONCLUSION ─── */
+  #conclusion {
+    background: radial-gradient(ellipse 100% 100% at 50% 50%, rgba(124,58,237,0.3) 0%, rgba(0,212,255,0.1) 40%, transparent 70%), var(--bg);
+    text-align: center;
+    align-items: center;
+  }
+
+  .conclusion-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .conclusion-big {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(40px, 7vw, 80px);
+    font-weight: 800;
+    line-height: 1;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+    margin-bottom: 24px;
+  }
+
+  .conclusion-sub {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+    margin-bottom: 50px;
+  }
+
+  .contact-chips {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+  }
+
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 10px 22px;
+    font-size: 14px;
+    color: var(--text);
+    text-decoration: none;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .chip:hover {
+    border-color: var(--accent1);
+    transform: scale(1.05);
+    color: var(--accent1);
+  }
+
+  /* ─── SECTION DIVIDERS ─── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent1), transparent);
+    margin: 0 60px;
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    section { padding: 80px 24px; }
+    nav { padding: 14px 24px; }
+    .nav-links { display: none; }
+    .company-grid, .game-cards, .jobs-grid, .recruit-grid, .brand-values, .kpi-grid, .team-grid, .comp-grid { grid-template-columns: 1fr; }
+    .steps-flow { flex-direction: column; gap: 24px; }
+    .step-item::before, .step-item::after { display: none; }
+  }
+
+  /* ─── LOADING ANIMATION ─── */
+  #loader {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    animation: loaderOut 0.6s ease 1.8s forwards;
+  }
+
+  @keyframes loaderOut {
+    to { opacity: 0; pointer-events: none; }
+  }
+
+  .loader-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: logoIn 0.6s ease 0.3s both;
+  }
+
+  @keyframes logoIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .loader-bar {
+    width: 200px;
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .loader-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+    animation: fillBar 1.5s ease 0.5s forwards;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  @keyframes fillBar {
+    to { transform: scaleX(1); }
+  }
+
+  /* ─── COUNTER ANIMATION ─── */
+  .counter { display: inline-block; }
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">GEN CREATORS</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Gen Creators</div>
+  <ul class="nav-links">
+    <li><a href="#company">الشركة</a></li>
+    <li><a href="#gamified">أسلوبنا</a></li>
+    <li><a href="#jobs">الوظائف</a></li>
+    <li><a href="#kpis">الأداء</a></li>
+    <li><a href="#team">الفريق</a></li>
+  </ul>
+</nav>
+
+<!-- ─── SLIDE 1 & 2: HERO ─── -->
+<section id="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-eyebrow">🚀 منصة التعلم الرقمي</div>
+
+  <h1 class="hero-title">
+    <span class="glow-word">GEN</span><br>
+    <span style="color: var(--text)">CREATORS</span>
+  </h1>
+
+  <p class="hero-sub">حيث يتحول التعلم إلى نجاح حقيقي</p>
+  <p style="font-size:15px; color: var(--muted); margin-top:10px; animation: fadeUp 1s ease 0.7s both; opacity:0;">
+    صانع محتوى · ذكاء اصطناعي · التعلم الرقمي عن بعد
+  </p>
+
+  <div class="hero-cta">
+    <a class="btn-primary" href="#company">اكتشف أكثر</a>
+  </div>
+
+  <div class="hero-grid">
+    <div class="hero-stat">
+      <span class="num" data-target="500">0</span>
+      <span class="lbl">طالب مستهدف</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num" data-target="5">0</span>
+      <span class="lbl">كورسات</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">50K</span>
+      <span class="lbl">متابع Brand</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── SLIDE 3: COMPANY ─── -->
+<section id="company">
+  <div class="company-grid">
+    <div class="reveal">
+      <p class="sec-label" style="opacity:1">من نحن</p>
+      <h2 class="sec-title" style="opacity:1">تعريف الشركة وأنواعها</h2>
+      <p class="sec-desc" style="opacity:1">
+        Gen Creators هي شركة تعليمية ناشئة متخصصة في تعليم البرمجة والذكاء الاصطناعي للمراهقين والطلاب — بنموذج عمل رقمي بالكامل.
+      </p>
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card reveal" style="animation-delay: 0.1s">
+        <div class="info-icon">🎯</div>
+        <div>
+          <h4>الرؤية</h4>
+          <p>المنصة الرائدة لتعليم المراهقين تكنولوجياً في الشرق الأوسط</p>
+        </div>
+      </div>
+      <div class="info-card reveal" style="animation-delay: 0.2s">
+        <div class="info-icon">📡</div>
+        <div>
+          <h4>الرسالة</h4>
+          <p>تعليم مبسط وتفاعلي يجهّز لسوق العمل الرقمي</p>
+        </div>
+      </div>
+      <div class="info-card reveal" style="animation-delay: 0.3s">
+        <div class="info-icon">💼</div>
+        <div>
+          <h4>نموذج العمل</h4>
+          <p>Digital — فريق يدعم النمو والانتشار السريع</p>
+        </div>
+      </div>
+      <div class="info-card reveal" style="animation-delay: 0.4s">
+        <div class="info-icon">⚡</div>
+        <div>
+          <h4>أهداف المدى القصير</h4>
+          <p>500 طالب · 5 كورسات · Brand 50K متابع</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SLIDE 4: GAMIFIED ─── -->
+<section id="gamified">
+  <div class="game-layout">
+    <div class="reveal">
+      <p class="sec-label" style="opacity:1">الابتكار</p>
+      <h2 class="sec-title" style="opacity:1">أسلوبنا المبتكر</h2>
+      <p class="sec-desc" style="opacity:1">Gamified Employer Branding — نحوّل تجربة التوظيف إلى تجربة تفاعلية بأسلوب الألعاب</p>
+    </div>
+
+    <div class="game-cards">
+      <div class="game-card reveal" style="animation-delay: 0.1s">
+        <span class="game-card-icon">💡</span>
+        <h3>الفكرة الأساسية</h3>
+        <p>نحوّل تجربة التوظيف إلى تجربة تفاعلية تعتمد على أسلوب الألعاب لجذب أفضل الكفاءات بطريقة مبتكرة وغير تقليدية.</p>
+      </div>
+      <div class="game-card reveal" style="animation-delay: 0.2s">
+        <span class="game-card-icon">⚙️</span>
+        <h3>آلية الفكرة</h3>
+        <p>المتقدمون يدخلوا في تحديات قصيرة بدل السيرة الذاتية، تقييم الأداء فورياً، أفضل المرشحين ينتقلوا مباشرة للتوظيف.</p>
+      </div>
+      <div class="game-card reveal" style="animation-delay: 0.3s">
+        <span class="game-card-icon">🎮</span>
+        <h3>أنواع التحديات</h3>
+        <div class="challenge-tags">
+          <span class="tag">Prompt Challenge</span>
+          <span class="tag">Content Creation</span>
+          <span class="tag">Marketing Mini Case</span>
+        </div>
+        <p style="margin-top:14px">حل مشكلة تسويقية، فيديو أو بوست، استراتيجية سريعة</p>
+      </div>
+      <div class="game-card reveal" style="animation-delay: 0.4s">
+        <span class="game-card-icon">🏆</span>
+        <h3>الهدف</h3>
+        <p>جذب المبدعين الحقيقيين · اختبار المهارات الفعلية بدل الورق · خلق تجربة توظيف مختلفة وجذابة.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SLIDE 5: JOBS ─── -->
+<section id="jobs">
+  <div style="max-width:1100px; margin:0 auto">
+    <div class="reveal">
+      <p class="sec-label" style="opacity:1">الوظائف</p>
+      <h2 class="sec-title" style="opacity:1">التحليل الوظيفي</h2>
+      <p class="sec-desc" style="opacity:1">الأدوار المحورية في فريق Gen Creators</p>
+    </div>
+
+    <div class="jobs-grid">
+      <div class="job-card reveal" style="animation-delay: 0.1s">
+        <div class="job-badge">Role 01</div>
+        <h3>Digital Marketing Specialist</h3>
+        <p class="job-target">الهدف: زيادة الوصول وجذب الطلاب</p>
+        <div class="job-skills">
+          <div class="skill-row"><div class="skill-dot"></div><span>إدارة السوشيال ميديا</span></div>
+          <div class="skill-row"><div class="skill-dot"></div><span>تشغيل الإعلانات الممولة</span></div>
+          <div class="skill-row"><div class="skill-dot"></div><span>تحليل الأداء والبيانات</span></div>
+          <div class="skill-row"><div class="skill-dot"></div><span>كتابة المحتوى التسويقي</span></div>
+        </div>
+      </div>
+
+      <div class="job-card reveal" style="animation-delay: 0.2s">
+        <div class="job-badge">Role 02</div>
+        <h3>Digital Creator</h3>
+        <p class="job-target">الهدف: تحويل المحتوى التعليمي إلى محتوى جذاب</p>
+        <div class="job-skills">
+          <div class="skill-row"><div class="skill-dot"></div><span>إنتاج فيديوهات قصيرة</span></div>
+          <div class="skill-row"><div class="skill-dot"></div><span>تصميم محتوى بصري</span></div>
+          <div class="skill-row"><div class="skill-dot"></div><span>الإبداع ومتابعة الترندات</span></div>
+          <div class="skill-row"><div class="skill-dot"></div><span>Canva والأدوات الرقمية</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SLIDE 6: RECRUITMENT ─── -->
+<section id="recruitment">
+  <div class="recruitment-inner reveal">
+    <p class="sec-label" style="opacity:1">استقطاب</p>
+    <h2 class="sec-title" style="opacity:1">قنوات الاستقطاب والتوظيف</h2>
+    <p class="sec-desc" style="opacity:1">استراتيجية متكاملة لاستقطاب أفضل المواهب</p>
+
+    <div class="recruit-grid">
+      <div class="recruit-block" style="animation-delay: 0.1s">
+        <h4>📣 قنوات الاستقطاب</h4>
+        <ul>
+          <li>LinkedIn للوظائف التقنية</li>
+          <li>منصات العمل الحر</li>
+          <li>جروبات فيسبوك المتخصصة</li>
+          <li>كليات ومعارض التوظيف</li>
+        </ul>
+      </div>
+      <div class="recruit-block" style="animation-delay: 0.2s">
+        <h4>🎯 استراتيجية الجذب</h4>
+        <ul>
+          <li>نظام Remote أو Hybrid</li>
+          <li>شفافية في الرواتب</li>
+          <li>مسار وظيفي واضح</li>
+          <li>بيئة عمل مبتكرة</li>
+        </ul>
+      </div>
+      <div class="recruit-block" style="animation-delay: 0.3s">
+        <h4>⚡ مزايا تنافسية</h4>
+        <ul>
+          <li>4 أيام عمل</li>
+          <li>عمل عن بعد بالكامل</li>
+          <li>أدوات AI مدفوعة</li>
+          <li>تطوير مهني مستمر</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="steps-flow" style="margin-top: 60px">
+      <div class="step-item reveal" style="animation-delay: 0.1s">
+        <div class="step-circle">1</div>
+        <h5>Screening</h5>
+        <p>فرز المتقدمين</p>
+      </div>
+      <div class="step-item reveal" style="animation-delay: 0.2s">
+        <div class="step-circle">2</div>
+        <h5>Interview</h5>
+        <p>مقابلة أولية</p>
+      </div>
+      <div class="step-item reveal" style="animation-delay: 0.3s">
+        <div class="step-circle">3</div>
+        <h5>Task</h5>
+        <p>اختبار عملي قصير</p>
+      </div>
+      <div class="step-item reveal" style="animation-delay: 0.4s">
+        <div class="step-circle">4</div>
+        <h5>Hiring</h5>
+        <p>التوظيف النهائي</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── VIDEO SECTION ─── -->
+<section id="video">
+  <div class="video-inner">
+
+    <div class="reveal">
+      <p class="sec-label" style="opacity:1">فيديو</p>
+      <h2 class="sec-title" style="opacity:1">شوف التجربة بنفسك</h2>
+      <p class="sec-desc" style="opacity:1">
+        نظرة واقعية على بيئة العمل وطريقة التفاعل داخل Gen Creators
+      </p>
+    </div>
+
+    <div class="video-card reveal" style="animation-delay:0.2s">
+      <div class="video-wrapper">
+        <video controls poster="">
+          <source src="mmm.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── SLIDE 8: BRAND ─── -->
+<section id="brand">
+  <div class="brand-inner">
+    <div class="reveal">
+      <p class="sec-label" style="opacity:1">هويتنا</p>
+      <h2 class="sec-title" style="opacity:1">البراند الوظيفي</h2>
+    </div>
+
+    <p class="brand-quote">"نحن لا نوظف موظفين،<br>بل نبني صناع تأثير"</p>
+
+    <div class="brand-values">
+      <div class="brand-val reveal" style="animation-delay: 0.1s">
+        <span class="val-icon">🔓</span>
+        <p>ثقافة الشركة — لا هرمية</p>
+      </div>
+      <div class="brand-val reveal" style="animation-delay: 0.2s">
+        <span class="val-icon">💡</span>
+        <p>الابتكار أهم من الخبرة</p>
+      </div>
+      <div class="brand-val reveal" style="animation-delay: 0.3s">
+        <span class="val-icon">🚀</span>
+        <p>أي فكرة يمكن أن تتحول إلى مشروع</p>
+      </div>
+      <div class="brand-val reveal" style="animation-delay: 0.4s">
+        <span class="val-icon">📊</span>
+        <p>التقييم بالنتائج فقط</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SLIDE 9: COMPENSATION ─── -->
+<section id="compensation">
+  <div class="comp-inner">
+    <div class="reveal">
+      <p class="sec-label" style="opacity:1">التعويضات</p>
+      <h2 class="sec-title" style="opacity:1">Compensation Strategy</h2>
+      <p class="sec-desc" style="opacity:1">مزيج من التعويض المالي وغير المالي لبناء فريق متحفز</p>
+    </div>
+
+    <div class="comp-warning reveal">
+      ⚠️ الوضع الحالي: خفض الرواتب 40% بسبب قيود الميزانية — يُعوّض بمزايا غير مالية قوية
+    </div>
+
+    <div class="comp-grid">
+      <div class="comp-card reveal" style="animation-delay:0.1s">
+        <span class="comp-icon">📈</span>
+        <p><strong style="color:var(--text)">Revenue Share</strong><br>حسب الأداء — كلما أنجزت أكثر، كسبت أكثر</p>
+      </div>
+      <div class="comp-card reveal" style="animation-delay:0.2s">
+        <span class="comp-icon">🕐</span>
+        <p><strong style="color:var(--text)">مرونة تامة</strong><br>4 أيام عمل أو عمل عن بعد بالكامل</p>
+      </div>
+      <div class="comp-card reveal" style="animation-delay:0.3s">
+        <span class="comp-icon">🎬</span>
+        <p><strong style="color:var(--text)">استوديو إنتاج مجاني</strong><br>للمدربين وصناع المحتوى</p>
+      </div>
+      <div class="comp-card reveal" style="animation-delay:0.4s">
+        <span class="comp-icon">🏅</span>
+        <p><strong style="color:var(--text)">شهادات خبرة رسمية</strong><br>تُعزز مسارك المهني</p>
+      </div>
+      <div class="comp-card reveal" style="animation-delay:0.5s">
+        <span class="comp-icon">🤖</span>
+        <p><strong style="color:var(--text)">AI Tools مدفوعة</strong><br>أحدث أدوات الذكاء الاصطناعي</p>
+      </div>
+      <div class="comp-card reveal" style="animation-delay:0.6s">
+        <span class="comp-icon">🌱</span>
+        <p><strong style="color:var(--text)">بناء Personal Brand</strong><br>وتطوير مهني مستمر</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SLIDE 10 & 11: KPIs ─── -->
+<section id="kpis">
+  <div class="kpi-inner">
+    <div class="reveal">
+      <p class="sec-label" style="opacity:1">الأداء</p>
+      <h2 class="sec-title" style="opacity:1">KPIs and Performance Metrics</h2>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card reveal" style="animation-delay:0.1s">
+        <span class="kpi-num">50–70</span>
+        <span class="kpi-label">متقدم لكل وظيفة</span>
+      </div>
+      <div class="kpi-card reveal" style="animation-delay:0.2s">
+        <span class="kpi-num">14–21</span>
+        <span class="kpi-label">يوم زمن التوظيف</span>
+      </div>
+      <div class="kpi-card reveal" style="animation-delay:0.3s">
+        <span class="kpi-num">75%</span>
+        <span class="kpi-label">معدل قبول العروض</span>
+      </div>
+      <div class="kpi-card reveal" style="animation-delay:0.4s">
+        <span class="kpi-num">80%</span>
+        <span class="kpi-label">احتفاظ بالموظفين</span>
+      </div>
+    </div>
+
+    <div class="kpi-extra reveal" style="animation-delay:0.5s; margin-top: 30px">
+      <div class="big-num">+65%</div>
+      <div>
+        <p><strong style="color:var(--text)">Applications</strong></p>
+        <p>تجربة التوظيف القائمة على الألعاب أظهرت زيادة 65% في عدد الطلبات، مما يعكس قوة التأثير على جذب المواهب الشابة وتعزيز ارتباط المرشحين بالشركة.</p>
+      </div>
+    </div>
+
+    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 32px; margin-top: 24px;" class="reveal">
+      <p style="font-size: 14px; color: var(--muted)">
+        📊 <strong style="color:var(--accent1)">أداء السوشيال:</strong>
+        معدل التفاعل 5–8% |
+        أفضل المحتوى: <span style="color:var(--text)">التحديات التفاعلية، محتوى الذكاء الاصطناعي، Before/After</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SLIDE 1: TEAM ─── -->
+<section id="team">
+  <div class="team-inner">
+    <div class="reveal">
+      <p class="sec-label" style="opacity:1">الفريق</p>
+      <h2 class="sec-title" style="opacity:1">فريق العمل</h2>
+      <p class="sec-desc" style="opacity:1">العقول المبدعة خلف Gen Creators</p>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card reveal" style="animation-delay:0.05s">
+        <div class="team-avatar">ا.م</div>
+        <h4>ابرار محمد عبد القادر</h4>
+        <p class="team-id">ID: 2476</p>
+        <span class="team-section">سكشن 1</span>
+      </div>
+      <div class="team-card reveal" style="animation-delay:0.1s">
+        <div class="team-avatar">ج.م</div>
+        <h4>جونير ماهر شحات</h4>
+        <p class="team-id">ID: 0079</p>
+        <span class="team-section">سكشن 4</span>
+      </div>
+      <div class="team-card reveal" style="animation-delay:0.15s">
+        <div class="team-avatar">م.خ</div>
+        <h4>ملك خالد منصور</h4>
+        <p class="team-id">ID: 0047</p>
+        <span class="team-section">سكشن 14</span>
+      </div>
+      <div class="team-card reveal" style="animation-delay:0.2s">
+        <div class="team-avatar">ه.ح</div>
+        <h4>هاجر حسني محمود</h4>
+        <p class="team-id">ID: 2171</p>
+        <span class="team-section">سكشن 17</span>
+      </div>
+      <div class="team-card reveal" style="animation-delay:0.25s">
+        <div class="team-avatar">ه.ع</div>
+        <h4>هاجر علي عبدالرحيم</h4>
+        <p class="team-id">ID: 2361</p>
+        <span class="team-section">سكشن 17</span>
+      </div>
+      <div class="team-card reveal" style="animation-delay:0.3s">
+        <div class="team-avatar">ه.س</div>
+        <h4>هبه اسامه السيد خليل</h4>
+        <p class="team-id">ID: 0130</p>
+        <span class="team-section">سكشن 13</span>
+      </div>
+      <div class="team-card reveal" style="animation-delay:0.35s">
+        <div class="team-avatar">م.ا</div>
+        <h4>مريم ايمن تلميذ</h4>
+        <p class="team-id">ID: 0366</p>
+        <span class="team-section">سكشن 17</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SLIDE 12 & 13: CONCLUSION ─── -->
+<section id="conclusion">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="conclusion-inner">
+    <div class="hero-eyebrow" style="animation-delay: 0.1s; animation: fadeUp 0.8s ease 0.1s both">الخلاصة</div>
+    <h2 class="conclusion-big">Thank You<br><span style="background: linear-gradient(135deg,var(--accent1),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent">for Your Attention!</span></h2>
+
+    <p class="conclusion-sub">
+      Gen Creators تمثل نموذجاً جديداً في التوظيف الرقمي، حيث تدمج بين التعلم والتقييم في بيئة تفاعلية ممتعة. ندعوكم لاستكشاف هذا النهج المبتكر والانضمام إلى رحلتنا.
+    </p>
+
+    <div class="contact-chips">
+      <a class="chip" href="mailto:info@gencreators.com">✉️ info@gencreators.com</a>
+      <a class="chip" href="#">🌐 www.gencreators.com</a>
+      <a class="chip" href="#">📸 @gencreators</a>
+      <a class="chip" href="#">📍 Cairo, Egypt</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // ─── SCROLL REVEAL ───
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // ─── COUNTER ANIMATION ───
+  function animateCounter(el, target, duration = 2000) {
+    let start = 0;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 4);
+      el.textContent = Math.floor(ease * target);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    };
+    requestAnimationFrame(step);
+  }
+
+  // Trigger counters when hero is loaded
+  setTimeout(() => {
+    document.querySelectorAll('[data-target]').forEach(el => {
+      animateCounter(el, parseInt(el.getAttribute('data-target')));
+    });
+  }, 2000);
+
+  // ─── SMOOTH NAV ───
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // ─── PARALLAX ORBS ───
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    document.querySelectorAll('.orb').forEach((orb, i) => {
+      orb.style.transform = `translateY(${scrollY * (0.1 + i * 0.05)}px)`;
+    });
+  });
+
+  // ─── REMOVE LOADER ───
+  setTimeout(() => {
+    document.getElementById('loader').style.display = 'none';
+  }, 2500);
+</script>
+</body>
+</html>
